@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Sazón de los Abuelos - Menú</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FDF6E3;
+    --warm-brown: #6B3A2A;
+    --gold: #C9972B;
+    --dark-gold: #9A7020;
+    --light-gold: #F5E6C0;
+    --text-dark: #3A2010;
+    --text-mid: #7A4F2E;
+    --green-accent: #4A7C59;
+    --border-ornament: #C9972B;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #2C1810;
+    font-family: 'Lato', sans-serif;
+    color: var(--text-dark);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 30px 16px;
+  }
+
+  .menu-wrapper {
+    background: var(--cream);
+    max-width: 780px;
+    width: 100%;
+    border: 3px solid var(--gold);
+    box-shadow: 0 0 0 6px #2C1810, 0 0 0 9px var(--gold), 0 0 40px rgba(0,0,0,0.6);
+    position: relative;
+  }
+
+  /* Corner ornaments */
+  .corner { position: absolute; width: 50px; height: 50px; }
+  .corner svg { width: 100%; height: 100%; }
+  .corner.tl { top: 8px; left: 8px; }
+  .corner.tr { top: 8px; right: 8px; transform: scaleX(-1); }
+  .corner.bl { bottom: 8px; left: 8px; transform: scaleY(-1); }
+  .corner.br { bottom: 8px; right: 8px; transform: scale(-1); }
+
+  /* Header */
+  .menu-header {
+    background: var(--warm-brown);
+    padding: 36px 60px 28px;
+    text-align: center;
+    border-bottom: 3px solid var(--gold);
+    position: relative;
+    overflow: hidden;
+  }
+  .menu-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 8px,
+      rgba(201,151,43,0.07) 8px,
+      rgba(201,151,43,0.07) 9px
+    );
+  }
+  .header-top {
+    font-family: 'Lato', sans-serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .restaurant-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    font-weight: 700;
+    color: #FFF8E8;
+    line-height: 1.1;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+    position: relative;
+  }
+  .restaurant-name em {
+    font-style: italic;
+    color: var(--gold);
+    font-size: 20px;
+    display: block;
+    margin-bottom: 2px;
+    letter-spacing: 2px;
+  }
+  .header-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 16px auto;
+    max-width: 300px;
+  }
+  .header-divider .line { flex: 1; height: 1px; background: var(--gold); }
+  .header-divider .diamond {
+    width: 8px; height: 8px;
+    background: var(--gold);
+    transform: rotate(45deg);
+  }
+  .header-sub {
+    font-family: 'Lato', sans-serif;
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(245,230,192,0.8);
+  }
+
+  /* Menu body */
+  .menu-body { padding: 30px 50px 40px; }
+
+  /* Section title */
+  .section-header {
+    text-align: center;
+    margin: 32px 0 20px;
+    position: relative;
+  }
+  .section-header::before {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    top: 50%;
+    height: 1px;
+    background: var(--gold);
+    opacity: 0.4;
+  }
+  .section-title {
+    display: inline-block;
+    background: var(--cream);
+    padding: 0 20px;
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--warm-brown);
+    letter-spacing: 1px;
+    position: relative;
+  }
+  .section-icon {
+    display: block;
+    font-size: 28px;
+    margin-bottom: 4px;
+  }
+
+  /* Menu item */
+  .menu-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 10px 0;
+    border-bottom: 1px dotted rgba(201,151,43,0.3);
+    gap: 12px;
+  }
+  .menu-item:last-child { border-bottom: none; }
+  .item-left { flex: 1; }
+  .item-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--warm-brown);
+  }
+  .item-desc {
+    font-size: 12px;
+    color: var(--text-mid);
+    margin-top: 3px;
+    line-height: 1.5;
+    font-style: italic;
+  }
+  .item-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--dark-gold);
+    white-space: nowrap;
+    padding-top: 2px;
+  }
+
+  /* Illustrated cards for main dishes */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 14px;
+    margin: 16px 0;
+  }
+  .dish-card {
+    background: #FFF9EE;
+    border: 1px solid var(--light-gold);
+    border-top: 3px solid var(--gold);
+    border-radius: 4px;
+    padding: 14px 12px 12px;
+    text-align: center;
+  }
+  .dish-card .emoji { font-size: 38px; display: block; margin-bottom: 8px; }
+  .dish-card .name {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--warm-brown);
+    margin-bottom: 4px;
+  }
+  .dish-card .variants {
+    font-size: 11px;
+    color: var(--text-mid);
+    font-style: italic;
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+  .dish-card .price {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--dark-gold);
+  }
+  .dish-card .price-alt {
+    font-size: 11px;
+    color: var(--text-mid);
+    display: block;
+    margin-top: 2px;
+  }
+
+  /* Two-column layout */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 16px 0;
+  }
+  @media (max-width: 560px) {
+    .two-col { grid-template-columns: 1fr; }
+    .menu-body { padding: 20px 24px 30px; }
+    .menu-header { padding: 28px 30px 22px; }
+    .restaurant-name { font-size: 30px; }
+    .card-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* Special banner */
+  .special-banner {
+    background: var(--warm-brown);
+    color: #FFF8E8;
+    text-align: center;
+    padding: 14px 20px;
+    margin: 28px 0 0;
+    border-top: 2px solid var(--gold);
+    border-bottom: 2px solid var(--gold);
+  }
+  .special-banner .label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+  .special-banner .title {
+    font-family: 'Playfair Display', serif;
+    font-size: 19px;
+    font-weight: 700;
+  }
+  .special-banner .detail {
+    font-size: 13px;
+    opacity: 0.85;
+    margin-top: 4px;
+  }
+
+  /* A la carta box */
+  .carta-box {
+    background: #FFF9EE;
+    border: 1px solid var(--light-gold);
+    padding: 16px;
+    margin: 12px 0;
+    border-radius: 4px;
+  }
+  .carta-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 0;
+    border-bottom: 1px dotted rgba(201,151,43,0.3);
+  }
+  .carta-item:last-child { border-bottom: none; }
+  .carta-emoji { font-size: 22px; }
+  .carta-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--warm-brown);
+    flex: 1;
+  }
+  .carta-desc { font-size: 11px; color: var(--text-mid); font-style: italic; }
+
+  /* Footer */
+  .menu-footer {
+    background: var(--warm-brown);
+    padding: 20px 50px;
+    text-align: center;
+    border-top: 3px solid var(--gold);
+  }
+  .footer-phone {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    color: var(--gold);
+    letter-spacing: 1px;
+  }
+  .footer-delivery {
+    font-size: 12px;
+    color: rgba(245,230,192,0.8);
+    margin-top: 6px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .footer-divider { margin: 10px auto; max-width: 200px; }
+
+  /* Ornamental separator */
+  .ornament {
+    text-align: center;
+    color: var(--gold);
+    font-size: 18px;
+    margin: 6px 0 2px;
+    letter-spacing: 6px;
+    opacity: 0.6;
+  }
+
+  .subsection {
+    font-family: 'Lato', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--green-accent);
+    margin: 16px 0 8px;
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 20px;
+    background: var(--light-gold);
+    color: var(--dark-gold);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+</style>
+</head>
+<body>
+<div class="menu-wrapper">
+
+  <!-- Corner ornaments -->
+  <div class="corner tl"><svg viewBox="0 0 50 50"><path d="M2 2 L22 2 M2 2 L2 22" stroke="#C9972B" stroke-width="2" fill="none"/><circle cx="2" cy="2" r="3" fill="#C9972B"/><path d="M8 2 Q14 8 14 14 Q8 14 2 8" stroke="#C9972B" stroke-width="1" fill="none" opacity="0.5"/></svg></div>
+  <div class="corner tr"><svg viewBox="0 0 50 50"><path d="M2 2 L22 2 M2 2 L2 22" stroke="#C9972B" stroke-width="2" fill="none"/><circle cx="2" cy="2" r="3" fill="#C9972B"/><path d="M8 2 Q14 8 14 14 Q8 14 2 8" stroke="#C9972B" stroke-width="1" fill="none" opacity="0.5"/></svg></div>
+  <div class="corner bl"><svg viewBox="0 0 50 50"><path d="M2 2 L22 2 M2 2 L2 22" stroke="#C9972B" stroke-width="2" fill="none"/><circle cx="2" cy="2" r="3" fill="#C9972B"/><path d="M8 2 Q14 8 14 14 Q8 14 2 8" stroke="#C9972B" stroke-width="1" fill="none" opacity="0.5"/></svg></div>
+  <div class="corner br"><svg viewBox="0 0 50 50"><path d="M2 2 L22 2 M2 2 L2 22" stroke="#C9972B" stroke-width="2" fill="none"/><circle cx="2" cy="2" r="3" fill="#C9972B"/><path d="M8 2 Q14 8 14 14 Q8 14 2 8" stroke="#C9972B" stroke-width="1" fill="none" opacity="0.5"/></svg></div>
+
+  <!-- Header -->
+  <div class="menu-header">
+    <p class="header-top">Bienvenidos a</p>
+    <div class="restaurant-name">
+      <em>El Sazón de</em>
+      Los Abuelos
+    </div>
+    <div class="header-divider"><div class="line"></div><div class="diamond"></div><div class="diamond"></div><div class="diamond"></div><div class="line"></div></div>
+    <p class="header-sub">Cocina tradicional con amor de hogar</p>
+  </div>
+
+  <!-- Menu Body -->
+  <div class="menu-body">
+
+    <!-- DESAYUNOS -->
+    <div class="section-header">
+      <div class="section-title"><span class="section-icon">🌅</span>Desayunos</div>
+    </div>
+
+    <div class="card-grid">
+      <div class="dish-card">
+        <span class="emoji">🍳</span>
+        <div class="name">Huevos al Gusto</div>
+        <div class="variants">A la mexicana, con jamón, con chorizo,<br>con tocino, tirados, al tablil,<br>ahogados, rancheros, divorciados</div>
+        <div class="price">$75<span class="price-alt">&nbsp;</span></div>
+      </div>
+      <div class="dish-card">
+        <span class="emoji">🥚</span>
+        <div class="name">Omeletes</div>
+        <div class="variants">Jamón, chorizo, tocino, nopal,<br>hawaiano, espinaca, champiñón</div>
+        <div class="price">$80 <span class="price-alt">Combinado 2 ing. $85</span></div>
+      </div>
+      <div class="dish-card">
+        <span class="emoji">🌮</span>
+        <div class="name">Enchiladas</div>
+        <div class="variants">Rojas, verdes $70<br>Mole $75<br>Suizas, enfrijoladas $80</div>
+        <div class="price">Desde $70</div>
+      </div>
+      <div class="dish-card">
+        <span class="emoji">🥖</span>
+        <div class="name">Molletes</div>
+        <div class="variants">Jamón, tocino, chorizo</div>
+        <div class="price">$65 <span class="price-alt">Combinado 2 ing. $75</span></div>
+      </div>
+      <div class="dish-card">
+        <span class="emoji">🥞</span>
+        <div class="name">Hot Cakes</div>
+        <div class="variants">4 piezas</div>
+        <div class="price">$50 <span class="price-alt">Con fruta $70</span></div>
+      </div>
+      <div class="dish-card">
+        <span class="emoji">🥪</span>
+        <div class="name">Club Sándwich</div>
+        <div class="variants">Jamón y queso</div>
+        <div class="price">$85 <span class="price-alt">Con Atún $70</span></div>
+      </div>
+    </div>
+
+    <!-- Chilaquiles -->
+    <div class="ornament">✦ ✦ ✦</div>
+    <div class="subsection">También en desayunos</div>
+    <div style="background:#FFF9EE; border:1px solid var(--light-gold); border-radius:4px; padding:12px 16px; display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+      <div>
+        <div class="item-name" style="font-family:'Playfair Display',serif; font-size:15px; font-weight:700; color:var(--warm-brown); margin-bottom:6px;">🌶️ Chilaquiles</div>
+        <div class="item-desc" style="font-size:12px; color:var(--text-mid); font-style:italic; margin-bottom:2px;">Rojos, verdes o divorciados</div>
+        <div style="font-size:12px; color:var(--text-mid); margin-top:6px; line-height:1.8;">
+          Con pollo &nbsp;<strong style="color:var(--dark-gold);">$60</strong><br>
+          Con chorizo &nbsp;<strong style="color:var(--dark-gold);">$65</strong><br>
+          Con huevo &nbsp;<strong style="color:var(--dark-gold);">$60</strong>
+        </div>
+      </div>
+      <div style="border-left:1px dotted rgba(201,151,43,0.4); padding-left:12px;">
+        <div class="item-name" style="font-family:'Playfair Display',serif; font-size:15px; font-weight:700; color:var(--warm-brown); margin-bottom:6px;">🌶️ Chilaquiles Especiales</div>
+        <div class="item-desc" style="font-size:12px; color:var(--text-mid); font-style:italic; margin-bottom:6px;">Con bistek</div>
+        <strong style="color:var(--dark-gold); font-size:15px;">$75</strong>
+      </div>
+    </div>
+
+    <!-- A LA CARTA -->
+    <div class="section-header">
+      <div class="section-title"><span class="section-icon">🍽️</span>A la Carta</div>
+    </div>
+
+    <div class="carta-box">
+      <div class="carta-item">
+        <span class="carta-emoji">🍗</span>
+        <div style="flex:1;">
+          <div class="carta-name">Pechuga Empanizada</div>
+          <div class="carta-desc">Con ensalada y papas</div>
+        </div>
+        <strong style="color:var(--dark-gold); font-family:'Playfair Display',serif; font-size:15px;">$120</strong>
+      </div>
+      <div class="carta-item">
+        <span class="carta-emoji">🧀</span>
+        <div style="flex:1;">
+          <div class="carta-name">Pechuga Cordon Bleu</div>
+          <div class="carta-desc">Empanizada rellena de jamón y queso</div>
+        </div>
+        <strong style="color:var(--dark-gold); font-family:'Playfair Display',serif; font-size:15px;">$140</strong>
+      </div>
+      <div class="carta-item">
+        <span class="carta-emoji">🍍</span>
+        <div style="flex:1;">
+          <div class="carta-name">Pechuga Hawaiana</div>
+          <div class="carta-desc">Con piña y queso gratinado</div>
+        </div>
+        <strong style="color:var(--dark-gold); font-family:'Playfair Display',serif; font-size:15px;">$140</strong>
+      </div>
+    </div>
+
+    <!-- MARISCOS -->
+    <div class="section-header">
+      <div class="section-title"><span class="section-icon">🦐</span>Mariscos</div>
+    </div>
+
+    <div class="card-grid">
+      <div class="dish-card">
+        <span class="emoji">🐟</span>
+        <div class="name">Mojarra al Gusto</div>
+        <div class="variants">A la diabla, frita,<br>al ajillo, al mojo de ajo</div>
+        <div class="price">$150</div>
+      </div>
+      <div class="dish-card">
+        <span class="emoji">🦐</span>
+        <div class="name">Camarones</div>
+        <div class="variants">Empanizados, a la diabla,<br>mojo de ajo, al ajillo</div>
+        <div class="price">$160</div>
+      </div>
+      <div class="dish-card">
+        <span class="emoji">🐠</span>
+        <div class="name">Filete de Pescado</div>
+        <div class="variants">Empapelado, empanizado,<br>a la diabla, a la mantequilla</div>
+        <div class="price">$130</div>
+      </div>
+    </div>
+
+    <!-- TORTAS Y HAMBURGUESAS -->
+    <div class="section-header">
+      <div class="section-title"><span class="section-icon">🌯</span>Tortas &amp; Hamburguesas</div>
+    </div>
+
+    <div class="two-col">
+      <div>
+        <div class="subsection">Tortas</div>
+        <div style="background:#FFF9EE; border:1px solid var(--light-gold); border-radius:4px; padding:10px 14px;">
+          <div class="menu-item">
+            <div class="item-left"><div class="item-name">Torta Suiza</div></div>
+            <div class="item-price">$80</div>
+          </div>
+          <div class="menu-item">
+            <div class="item-left"><div class="item-name">Argentina</div></div>
+            <div class="item-price">$80</div>
+          </div>
+          <div class="menu-item">
+            <div class="item-left"><div class="item-name">Hawaiana</div></div>
+            <div class="item-price">$80</div>
+          </div>
+          <div class="menu-item">
+            <div class="item-left"><div class="item-name">Cubana</div></div>
+            <div class="item-price">$80</div>
+          </div>
+          <div class="menu-item">
+            <div class="item-left"><div class="item-name">Pierna</div></div>
+            <div class="item-price">$60</div>
+          </div>
+          <div class="menu-item">
+            <div class="item-left"><div class="item-name">Jamón, huevo, salchicha</div></div>
+            <div class="item-price">$50</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="subsection">Hamburguesas</div>
+        <div style="background:#FFF9EE; border:1px solid var(--light-gold); border-radius:4px; padding:10px 14px;">
+          <div class="menu-item">
+            <div class="item-left"><div class="item-name">Sencilla</div></div>
+            <div class="item-price">$65</div>
+          </div>
+          <div class="menu-item">
+            <div class="item-left"><div class="item-name">Hawaiana</div></div>
+            <div class="item-price">$80</div>
+          </div>
+          <div class="menu-item">
+            <div class="item-left"><div class="item-name">Clásica</div></div>
+            <div class="item-price">$75</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMIDA CORRIDA -->
+    <div class="special-banner">
+      <p class="label">⭐ Especial del día ⭐</p>
+      <p class="title">Comida Corrida</p>
+      <p class="detail">Primer y segundo tiempo</p>
+      <p class="detail">Guisado, postre, agua del día &nbsp;|&nbsp; <strong>$85</strong></p>
+      <p class="detail" style="font-size:11px; margin-top:4px; opacity:0.7;">Disponible a partir de la 1:00 pm</p>
+    </div>
+
+  </div><!-- end menu-body -->
+
+  <!-- Footer -->
+  <div class="menu-footer">
+    <div class="header-divider footer-divider" style="max-width:200px; margin:0 auto 12px;">
+      <div class="line" style="background:rgba(201,151,43,0.4);"></div>
+      <div class="diamond" style="background:var(--gold);"></div>
+      <div class="line" style="background:rgba(201,151,43,0.4);"></div>
+    </div>
+    <p style="font-family:'Playfair Display',serif; font-size:14px; color:#FFF8E8; font-style:italic; margin-bottom:10px;">Quedamos a sus servicios, Dylan y Susy</p>
+    <p class="footer-phone">📞 &nbsp;55-64-54-84-53 &nbsp;|&nbsp; 56-53-94-76-76</p>
+    <p class="footer-delivery" style="margin-top:10px;">📍 &nbsp;Cuarta Cerrada de 2 de Febrero, Col. Ampliación Nativitas, La Joya Nativitas</p>
+    <p class="footer-delivery" style="margin-top:8px;">🛵 &nbsp;Entregamos a los alrededores sin costo extra</p>
+  </div>
+
+</div><!-- end menu-wrapper -->
+</body>
+</html>
